@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+# StoneMarble-Twine-OldSchool-MERNG
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app) and will attempt to provide an interactive story that relies heavily on OSE's Classic Fantasy Rules.
 
 ## Available Scripts
 
