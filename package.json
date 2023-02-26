@@ -1,0 +1,20 @@
+{
+  "name": "guetorres-stonemarble-twine-oldschool-merng",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GueTorres/GueTorres-StoneMarble-Twine-OldSchool-MERNG.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GueTorres/GueTorres-StoneMarble-Twine-OldSchool-MERNG/issues"
+  },
+  "homepage": "https://github.com/GueTorres/GueTorres-StoneMarble-Twine-OldSchool-MERNG#readme"
+}
