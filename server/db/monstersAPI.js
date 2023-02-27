@@ -1,6 +1,3 @@
-const express = require("express");
-const expressGraphQL = require("express-graphql");
-const conn = require("./monsterConn")
 const {
     GraphQLID,
     GraphQLString,
@@ -12,48 +9,76 @@ const {
     GraphQLObjectType
 } = require("graphql")
 
-var monsterSchema = new GraphQLSchema(`
-    type Monster {
-        "name": String,
-        "AC": Int,
-        "HD": Int,
-        "Att": String,
-        "THAC0": Int,
-        "MV": Int,
-        "D": Int,
-        "W": Int,
-        "P": Int,
-        "B": Int,
-        "S": Int,
-        "ML": Int,
-        "AL": String,
-        "XP": Int,
-        "NA": String,
-        "TT": String
+const monsterType = new GraphQLObjectType({  
+    name: 'Monster',
+    description: 'This represents a monster',
+    fields: () => ({
+      id: { type: GraphQLID }, 
+      name: { type: GraphQLString }, 
+      AC: { type: GraphQLInt }, 
+      HD: { type: GraphQLInt }, 
+      Att: { type: GraphQLString }, 
+      THAC0: { type: GraphQLInt }, 
+      MV: { type: GraphQLInt }, 
+      D: { type: GraphQLInt }, 
+      W: { type: GraphQLInt }, 
+      P: { type: GraphQLInt }, 
+      B: { type: GraphQLInt }, 
+      S: { type: GraphQLInt }, 
+      ML: { type: GraphQLInt }, 
+      AL: { type: GraphQLString }, 
+      XP: { type: GraphQLInt }, 
+      NA: { type: GraphQLString }, 
+      TT: { type: GraphQLString }
+    })  
+});
+
+const root = new GraphQLObjectType({
+  name: 'Query',
+  description: 'Root Query',
+  fields: () => ({
+    monster: {
+      type: monsterType,
+      description: 'A Monster',
+      args: {
+        id: { type: GraphQLID }
+      },
+      resolve: (parent, args) => monsters.find(monster => monster.name === args.name)
+    },
+    monsters: {
+      type: new GraphQLList(monsterType),
+      description: 'List of All Monsters',
+      resolve: () => monsters
     }
-`);
+  })
+});
+
+const monsterSchema = new GraphQLSchema({
+  query: root
+  //mutation: RootMutationType
+})
 
 // Construct a schema, using GraphQL schema language
-var monster = new GraphQLObjectType(`
-  type Query {
-    getMonster: Monster 
-  }
-`);
+// var monster = new GraphQLObjectType(`
+//   type Query {
+//     getMonster: Monster 
+//   }
+// `);
 
 // The root provides a resolver function for each API endpoint
-var root = {
-  getMonster: (name) => {
+// var root = {
+//   getMonster: (name) => {  
+//     try{  
+//         let monsterSet = new Set(bestiary.get());
     
-    
-    return 'Hello world!'; //this can return objects as well
-  },                       //lets try to return an object like boar
-};
-const app = express();
-
-app.use('/graphql', expressGraphQL({
-  schema: monsterSchema,
-  rootValue: root,
-  graphiql: true,
-}));
-app.listen(4000);
-console.log('Running a GraphQL API server at http://localhost:4000/graphql');
+//         for(var monsterEntry in monsterSet){
+//           if(monsterEntry.name === name) {
+//           return monsterEntry;
+//           }                     
+//         }                     
+//       } 
+//       catch(err){
+//         console.log("Monster not found");
+//       }                   
+//   }                       
+// };

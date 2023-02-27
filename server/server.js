@@ -1,8 +1,9 @@
 const express = require("express");
-
+const { graphqlHTTP } = require("express-graphql");
 const app = express();
 const cors = require("cors");
-require("dotenv").config({ path: "./config.env" });
+const monsterSchema = require("./db/monstersAPI");
+require("dotenv").config({path:__dirname+'/../.env'});
 const port = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
@@ -14,7 +15,13 @@ app.listen(port, () => {
   // perform a database connection when server starts
   dbo.connectToServer(function (err) {
     if (err) console.error(err);
- 
-  });
-  console.log(`Server is running on port: ${port}`);
+    
+  })
 });
+
+app.use('/graphql', graphqlHTTP({
+  schema: monsterSchema,
+  graphiql: true,
+}));
+
+console.log(`Running a GraphQL API server at http://localhost:${port}/graphql`);

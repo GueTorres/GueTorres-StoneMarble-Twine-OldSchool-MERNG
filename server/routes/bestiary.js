@@ -1,9 +1,9 @@
 const express = require("express");
  
-// recordRoutes is an instance of the express router.
+// monsterRoutes is an instance of the express router.
 // We use it to define our routes.
-// The router will be added as a middleware and will take control of requests starting with path /record.
-const recordRoutes = express.Router();
+// The router will be added as a middleware and will take control of requests starting with path /monster.
+const monsterRoutes = express.Router();
  
 // This will help us connect to the database
 const dbo = require("../db/monsterConn");
@@ -13,7 +13,7 @@ const ObjectId = require("mongodb").ObjectId;
  
  
 // This section will help you get a list of all the monsters.
-recordRoutes.route("/bestiary").get(function (req, res) {
+monsterRoutes.route("/bestiary").get(function (req, res) {
  let db_connect = dbo.getDb("OldSchoolDB");
  db_connect
    .collection("Monsters")
@@ -25,7 +25,7 @@ recordRoutes.route("/bestiary").get(function (req, res) {
 });
  
 // This section will help you get a single monster by id
-recordRoutes.route("/bestiary/:id").get(function (req, res) {
+monsterRoutes.route("/bestiary/:id").get(function (req, res) {
  let db_connect = dbo.getDb();
  let myquery = { _id: ObjectId(req.params.id) };
  db_connect
@@ -37,7 +37,7 @@ recordRoutes.route("/bestiary/:id").get(function (req, res) {
 });
  
 // This section will help you create a new monster.
-recordRoutes.route("/bestiary/add").post(function (req, response) {
+monsterRoutes.route("/bestiary/add").post(function (req, response) {
  let db_connect = dbo.getDb();
  let myobj = {
    name: req.body.name,
@@ -51,7 +51,7 @@ recordRoutes.route("/bestiary/add").post(function (req, response) {
 });
  
 // This section will help you update a monster by id.
-recordRoutes.route("/update/:id").post(function (req, response) {
+monsterRoutes.route("/update/:id").post(function (req, response) {
  let db_connect = dbo.getDb();
  let myquery = { _id: ObjectId(req.params.id) };
  let newvalues = {
@@ -71,7 +71,7 @@ recordRoutes.route("/update/:id").post(function (req, response) {
 });
  
 // This section will help you delete a monster
-recordRoutes.route("/:id").delete((req, response) => {
+monsterRoutes.route("/:id").delete((req, response) => {
  let db_connect = dbo.getDb();
  let myquery = { _id: ObjectId(req.params.id) };
  db_connect.collection("Monsters").deleteOne(myquery, function (err, obj) {
@@ -81,4 +81,4 @@ recordRoutes.route("/:id").delete((req, response) => {
  });
 });
  
-module.exports = recordRoutes;
+module.exports = monsterRoutes;
