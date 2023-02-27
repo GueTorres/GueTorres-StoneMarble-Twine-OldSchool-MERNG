@@ -14,8 +14,7 @@ const dbo = require("./db/monsterConn");
 app.listen(port, () => {
   // perform a database connection when server starts
   dbo.connectToServer(function (err) {
-    if (err) console.error(err);
-    
+    if (err) console.error(err);    
   })
 });
 

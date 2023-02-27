@@ -16,8 +16,7 @@ module.exports = {
     } catch(err){
       console.error(err);
     }
-  },
- 
+  }, 
   getDb: function () {
     return _db;
   },
