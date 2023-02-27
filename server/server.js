@@ -1,15 +1,4 @@
 const express = require("express");
-const expressGraphQL = require("express-graphql");
-const mongoose = require("mongoose");
-const {
-    GraphQLID,
-    GraphQLString,
-    GraphQLList,
-    GraphQLType,
-    GraphQLSchema,
-    GraphQLNonNull,
-    GraphQLObjectType
-} = require("graphql")
 
 const app = express();
 const cors = require("cors");
@@ -17,9 +6,9 @@ require("dotenv").config({ path: "./config.env" });
 const port = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
-app.use(require("./routes/record"));
+app.use(require("./routes/bestiary"));
 // get driver connection
-const dbo = require("./db/conn");
+const dbo = require("./db/monsterConn");
  
 app.listen(port, () => {
   // perform a database connection when server starts
