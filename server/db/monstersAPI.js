@@ -13,7 +13,7 @@ const monsterType = new GraphQLObjectType({
   name: 'Monster',
   description: 'This represents a monster',
   fields: () => ({ 
-    _id: { type: GraphQLID }, 
+    id: { type: GraphQLID }, 
     name: { type: GraphQLString },
     AC: { type: GraphQLInt }, 
     HD: { type: GraphQLInt }, 
@@ -33,7 +33,7 @@ const monsterType = new GraphQLObjectType({
   })  
 });
 
-module.exports = (callback) => {
+
 
   const root = new GraphQLObjectType({
     name: 'RootQueryType',
@@ -49,7 +49,7 @@ module.exports = (callback) => {
       monsters: {
         type: new GraphQLList(monsterType),
         description: 'List of All Monsters',
-        resolve: () => { return monsterModel.find({}); }
+        resolve: async () => { return await monsterModel.find({}); }
       }
       })
   });  
@@ -59,9 +59,8 @@ module.exports = (callback) => {
     //TODO: mutation: RootMutationType
   });
 
-  callback(root);
-  callback(monsterSchema);
-};
+  exports.monsterSchema = monsterSchema;
+  exports.root = root;
 
 
       
