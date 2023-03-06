@@ -12,6 +12,7 @@ app.use(express.json());
 // app.use(require("./routes/bestiary")); may not be necessary
 
 const mongoose = require('mongoose');
+mongoose.set('strictQuery', true);
 mongoose.connect(Db);
 mongoose.connection.once('open', async () => {
   await console.log("OldSchoolDB Connected");
