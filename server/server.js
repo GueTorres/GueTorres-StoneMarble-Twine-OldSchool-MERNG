@@ -2,7 +2,7 @@ const express = require("express");
 const { graphqlHTTP } = require("express-graphql");
 const app = express();
 const cors = require("cors");
-const root = require("./db/monstersAPI");
+const schema = require('./graphql/schema');
 
 require("dotenv").config({path:__dirname+'/../.env'});
 const port = process.env.PORT || 5000;
@@ -14,17 +14,17 @@ app.use(express.json());
 const mongoose = require('mongoose');
 mongoose.set('strictQuery', true);
 mongoose.connect(Db);
-mongoose.connection.once('open', async () => {
-  await console.log("OldSchoolDB Connected");
+mongoose.connection.once('open', () => {
+  console.log("OldSchoolDB Connected");
 });
+console.log(mongoose.connection.readyState);
 
-const monsterSchema = require("./db/monstersAPI");
+//const monsterSchema = require("./db/monstersAPI"); may not be necessary
 
 app.listen(port);
 
 app.use('/graphql', graphqlHTTP({
-  schema: monsterSchema,
-  rootValue: root,
+  schema: schema,
   graphiql: true
 }));
 

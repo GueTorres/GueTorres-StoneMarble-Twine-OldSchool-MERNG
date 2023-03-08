@@ -1,8 +1,8 @@
+const { ObjectId } = require('mongodb');
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
 
-const monsterModel = new Schema({
-    id: String, 
+const monsterSchema = new mongoose.Schema({
+    _id: ObjectId, 
     name: String, 
     AC: Number, 
     HD: Number, 
@@ -21,4 +21,4 @@ const monsterModel = new Schema({
     TT: String
 })
 
-module.exports = mongoose.model('Monster', monsterModel);
+module.exports = mongoose.model('Monster', monsterSchema);
