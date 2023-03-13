@@ -5,7 +5,26 @@ const Monster = require('../models/Monster');
 
 const schema = buildSchema(`
   type Query {
-    hello: String
+    monster(_id: ID!): Monster
+  },
+  type Monster {
+    _id: ID, 
+    name: String,
+    AC: Int, 
+    HD: Int, 
+    Att: String, 
+    THAC0: Int, 
+    MV: Int, 
+    D: Int, 
+    W: Int, 
+    P: Int, 
+    B: Int, 
+    S: Int, 
+    ML: Int, 
+    AL: String, 
+    XP: Int, 
+    NA: String, 
+    TT: String
   }
 `);
 
@@ -15,11 +34,11 @@ const RootQuery = new GraphQLObjectType({
     monster: {
       type: monsterGraphQLType,
       args: {_id: {type: GraphQLID}},
-      resolve(args) {
+      findMonster: (args) => {
         return Monster.findById(args._id);
       },
     },
-  },
+  }
 });
 
 module.exports = new GraphQLSchema({
